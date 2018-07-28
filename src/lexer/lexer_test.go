@@ -14,6 +14,8 @@ def add(x, y)
 end
 
 result = add(five, ten)
+!-/*5
+5 < 10 > 5
 `
 
 	tests := []struct {
@@ -23,9 +25,12 @@ result = add(five, ten)
 		{token.IDENTIFIER, "five"},
 		{token.ASSIGN, "="},
 		{token.INTEGER, "5"},
+		{token.NEWLINE, "\n"},
 		{token.IDENTIFIER, "ten"},
 		{token.ASSIGN, "="},
 		{token.INTEGER, "10"},
+		{token.NEWLINE, "\n"},
+		{token.NEWLINE, "\n"},
 		{token.METHOD, "def"},
 		{token.IDENTIFIER, "add"},
 		{token.LPAREN, "("},
@@ -33,11 +38,15 @@ result = add(five, ten)
 		{token.COMMA, ","},
 		{token.IDENTIFIER, "y"},
 		{token.RPAREN, ")"},
+		{token.NEWLINE, "\n"},
 		{token.RETURN, "return"},
 		{token.IDENTIFIER, "x"},
 		{token.PLUS, "+"},
 		{token.IDENTIFIER, "y"},
+		{token.NEWLINE, "\n"},
 		{token.END, "end"},
+		{token.NEWLINE, "\n"},
+		{token.NEWLINE, "\n"},
 		{token.IDENTIFIER, "result"},
 		{token.ASSIGN, "="},
 		{token.IDENTIFIER, "add"},
@@ -46,6 +55,19 @@ result = add(five, ten)
 		{token.COMMA, ","},
 		{token.IDENTIFIER, "ten"},
 		{token.RPAREN, ")"},
+		{token.NEWLINE, "\n"},
+		{token.ILLEGAL, "!"},
+		{token.MINUS, "-"},
+		{token.SLASH, "/"},
+		{token.ASTERISK, "*"},
+		{token.INTEGER, "5"},
+		{token.NEWLINE, "\n"},
+		{token.INTEGER, "5"},
+		{token.LESSTHAN, "<"},
+		{token.INTEGER, "10"},
+		{token.GREATERTHAN, ">"},
+		{token.INTEGER, "5"},
+		{token.NEWLINE, "\n"},
 		{token.EOF, ""},
 	}
 

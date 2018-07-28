@@ -33,9 +33,23 @@ func (lexer *Lexer) readCharacter() {
 func (lexer *Lexer) NextToken() token.Token {
 	var tok token.Token
 
+	lexer.skipWhitespace()
+
 	switch lexer.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, lexer.ch)
+	case '+':
+		tok = newToken(token.PLUS, lexer.ch)
+	case '-':
+		tok = newToken(token.MINUS, lexer.ch)
+	case '/':
+		tok = newToken(token.SLASH, lexer.ch)
+	case '*':
+		tok = newToken(token.ASTERISK, lexer.ch)
+	case '<':
+		tok = newToken(token.LESSTHAN, lexer.ch)
+	case '>':
+		tok = newToken(token.GREATERTHAN, lexer.ch)
 	case ';':
 		tok = newToken(token.SEMICOLON, lexer.ch)
 	case '(':
@@ -44,11 +58,23 @@ func (lexer *Lexer) NextToken() token.Token {
 		tok = newToken(token.RPAREN, lexer.ch)
 	case ',':
 		tok = newToken(token.COMMA, lexer.ch)
-	case '+':
-		tok = newToken(token.PLUS, lexer.ch)
+	case '\n':
+		tok = newToken(token.NEWLINE, lexer.ch)
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
+	default:
+		if isLetter(lexer.ch) {
+			tok.Literal = lexer.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
+			return tok
+		} else if isDigit(lexer.ch) {
+			tok.Type = token.INTEGER
+			tok.Literal = lexer.readNumber()
+			return tok
+		} else {
+			tok = newToken(token.ILLEGAL, lexer.ch)
+		}
 	}
 
 	lexer.readCharacter()
@@ -57,4 +83,36 @@ func (lexer *Lexer) NextToken() token.Token {
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
+}
+
+func (lexer *Lexer) readIdentifier() string {
+	start_position := lexer.position
+	for isLetter(lexer.ch) {
+		lexer.readCharacter()
+	}
+
+	return lexer.input[start_position:lexer.position]
+}
+
+func isLetter(ch byte) bool {
+	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
+}
+
+func (lexer *Lexer) skipWhitespace() {
+	for lexer.ch == ' ' || lexer.ch == '\t' || lexer.ch == '\r' {
+		lexer.readCharacter()
+	}
+}
+
+func (lexer *Lexer) readNumber() string {
+	start_position := lexer.position
+	for isDigit(lexer.ch) {
+		lexer.readCharacter()
+	}
+
+	return lexer.input[start_position:lexer.position]
+}
+
+func isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
 }
