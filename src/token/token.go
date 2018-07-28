@@ -21,8 +21,11 @@ const (
 	MINUS       = "-"
 	SLASH       = "/"
 	ASTERISK    = "*"
+	BANG        = "!"
 	LESSTHAN    = "<"
 	GREATERTHAN = ">"
+	EQUAL       = "=="
+	NOT_EQUAL   = "!="
 
 	// Delimiters
 	COMMA     = ","
@@ -35,12 +38,20 @@ const (
 	METHOD = "METHOD"
 	END    = "END"
 	RETURN = "RETURN"
+	TRUE   = "TRUE"
+	FALSE  = "FALSE"
+	ELSE   = "ELSE"
+	IF     = "IF"
 )
 
 var keywords = map[string]TokenType{
 	"def":    METHOD,
 	"end":    END,
 	"return": RETURN,
+	"if":     IF,
+	"else":   ELSE,
+	"true":   TRUE,
+	"false":  FALSE,
 }
 
 func LookupIdent(ident string) TokenType {

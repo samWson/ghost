@@ -16,6 +16,15 @@ end
 result = add(five, ten)
 !-/*5
 5 < 10 > 5
+
+if (5 < 10) 
+	return true
+else
+	return false
+end
+
+10 == 10
+10 != 9
 `
 
 	tests := []struct {
@@ -56,7 +65,7 @@ result = add(five, ten)
 		{token.IDENTIFIER, "ten"},
 		{token.RPAREN, ")"},
 		{token.NEWLINE, "\n"},
-		{token.ILLEGAL, "!"},
+		{token.BANG, "!"},
 		{token.MINUS, "-"},
 		{token.SLASH, "/"},
 		{token.ASTERISK, "*"},
@@ -67,6 +76,33 @@ result = add(five, ten)
 		{token.INTEGER, "10"},
 		{token.GREATERTHAN, ">"},
 		{token.INTEGER, "5"},
+		{token.NEWLINE, "\n"},
+		{token.NEWLINE, "\n"},
+		{token.IF, "if"},
+		{token.LPAREN, "("},
+		{token.INTEGER, "5"},
+		{token.LESSTHAN, "<"},
+		{token.INTEGER, "10"},
+		{token.RPAREN, ")"},
+		{token.NEWLINE, "\n"},
+		{token.RETURN, "return"},
+		{token.TRUE, "true"},
+		{token.NEWLINE, "\n"},
+		{token.ELSE, "else"},
+		{token.NEWLINE, "\n"},
+		{token.RETURN, "return"},
+		{token.FALSE, "false"},
+		{token.NEWLINE, "\n"},
+		{token.END, "end"},
+		{token.NEWLINE, "\n"},
+		{token.NEWLINE, "\n"},
+		{token.INTEGER, "10"},
+		{token.EQUAL, "=="},
+		{token.INTEGER, "10"},
+		{token.NEWLINE, "\n"},
+		{token.INTEGER, "10"},
+		{token.NOT_EQUAL, "!="},
+		{token.INTEGER, "9"},
 		{token.NEWLINE, "\n"},
 		{token.EOF, ""},
 	}
